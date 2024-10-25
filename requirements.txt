@@ -1,1 +1,8 @@
 streamlit
+numpy
+tensorflow
+Pillow
+requests
+pandas
+matplotlib
+validators
