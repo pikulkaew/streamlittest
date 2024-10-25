@@ -33,9 +33,6 @@ def page1():
         return class_names
 
     def predict(image, model, class_names):
-        # Convert image to RGB if it has an alpha channel
-        if image.mode == "RGBA":
-            image = image.convert("RGB")
         image = image.resize((224, 224))
         image_array = np.asarray(image)
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
@@ -45,7 +42,7 @@ def page1():
         prediction = model.predict(data)
         return prediction
 
-    st.markdown("<h1 style='text-align: center;'>Coffee Classifier2</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Coffee Classifier</h1>", unsafe_allow_html=True)
 
     model = load_custom_model()
     class_names = load_labels()
@@ -102,12 +99,12 @@ def page1():
 
     def display_image_table():
         table_data = [
-            ["https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/coffee%20exemple%20img%2Fdark%20(1).png?alt=media&token=5d626d79-7203-43f9-9a14-345d94f20935",
+            ["https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/coffee%20exemple%20img%2Fdark%20(1).png?alt=media&token=5d626d79-7203-43f9-9a14-345d94f20935", 
              "https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/coffee%20exemple%20img%2Fgreen%20(2).png?alt=media&token=a475026b-e69a-4713-b9a2-96d7fadfcb2b"],
-            ["https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/coffee%20exemple%20img%2Flight%20(1).png?alt=media&token=b87e27d4-0dfd-4746-a713-6ec2567d819d",
+            ["https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/coffee%20exemple%20img%2Flight%20(1).png?alt=media&token=b87e27d4-0dfd-4746-a713-6ec2567d819d", 
              "https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/coffee%20exemple%20img%2Fmedium%20(1).png?alt=media&token=3f661e8a-bf6c-4061-9a6d-19bb9994c151"]
         ]
-
+        
         if "show_table" not in st.session_state:
             st.session_state.show_table = False
 
@@ -125,8 +122,8 @@ def page1():
                             col.image(item, width=100)
                         else:
                             col.write(item)
-
-            st.markdown("See More : [https://drive.google.com/drive/folders/AI/รูปกาแฟคั่วถ่ายเอง+kaggle](https://drive.google.com/drive/folders/13mdUTt9wMn-swYButWDfugoCFJoA-DHo?usp=drive_link)")
+                
+                st.markdown("See More : [https://drive.google.com/drive/folders/AI/รูปกาแฟคั่วถ่ายเอง+kaggle](https://drive.google.com/drive/folders/13mdUTt9wMn-swYButWDfugoCFJoA-DHo?usp=drive_link)")
 
     display_image_table()
 
@@ -146,8 +143,6 @@ def page2():
         return class_names
 
     def predict(image, model, class_names):
-        if image.mode == "RGBA":
-            image = image.convert("RGB")
         image = image.resize((224, 224))
         image_array = np.asarray(image)
         data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
@@ -210,19 +205,16 @@ def page2():
 
     with col2:
         st.header("Prediction Result")
-        if model is not None and ((mode == "Upload Image" and uploaded_file is not None) or (mode == "Take a Picture" and camera_file is not None)):
-            st.write(f"Class: {class_name}")
-            st.write(f"Confidence: {confidence_score * 100:.2f}%")
+        if class_name:
+            st.write(f"Class: {class_name}")  # Display class name
+            st.write(f"Confidence: {confidence_score * 100:.2f}%")  # Display as percentage
         else:
-            st.write("Please upload an image or take a picture to see the prediction.")
+            st.write("Please take a picture or upload an image to see the prediction.")
 
-st.set_page_config(page_title="Coffee Classifier", page_icon="☕")
+    st.write('Presented by : Group 5 Student ID 65050225,65050686,65050378,65050838')
+    st.markdown("Agricultural crops image classification : [here](https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/%E0%B8%AA%E0%B8%B3%E0%B8%AB%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%83%E0%B8%AA%E0%B9%88%E0%B9%82%E0%B8%A1%E0%B9%80%E0%B8%94%E0%B8%A5%E0%B9%80%E0%B8%97%E0%B8%A3%E0%B8%99%2FAgricultural-crops%20(2).zip?alt=media&token=b8873ba9-95e4-497f-be09-fd0afe738b77)")
+    st.markdown("Cat-Dog image classification : [here](https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/%E0%B8%AA%E0%B8%B3%E0%B8%AB%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B9%83%E0%B8%AA%E0%B9%88%E0%B9%82%E0%B8%A1%E0%B9%80%E0%B8%94%E0%B8%A5%E0%B9%80%E0%B8%97%E0%B8%A3%E0%B8%99%2Fcat-dog121067%20(2).zip?alt=media&token=c7299649-9e65-4447-8406-cf178bc47ecf)")
 
-# Add a sidebar to navigate between pages
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Coffee Classifier", "Upload Your Own Model"])
-
-if page == "Coffee Classifier":
-    page1()
-else:
-    page2()
+# Run the app
+pg = st.navigation([st.Page(page1), st.Page(page2)])
+pg.run()
