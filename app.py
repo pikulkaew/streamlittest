@@ -45,7 +45,7 @@ def page1():
         prediction = model.predict(data)
         return prediction
 
-    st.markdown("<h1 style='text-align: center;'>Coffee Classifier</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>Coffee Classifier2</h1>", unsafe_allow_html=True)
 
     model = load_custom_model()
     class_names = load_labels()
